@@ -6,12 +6,8 @@
     <div class="logo">
       <span class="iconfont iconnew"></span>
     </div>
-    <div class="inputWrapper">
-      <input type="text" />
-    </div>
-    <div class="inputWrapper">
-      <input type="text" />
-    </div>
+    <InputBar type="text" placeholder="用户名 / 手机号码"></InputBar>
+    <InputBar type="password" placeholder="密码"></InputBar>
     <div class="btnSubmit">
       <button>登录</button>
     </div>
@@ -21,8 +17,9 @@
 
 <script>
 import Wrap from "../components/wrap.vue";
+import InputBar from "../components/inputBar.vue";
 export default {
-  components: { Wrap },
+  components: { Wrap, InputBar },
 };
 </script>
 
@@ -31,6 +28,7 @@ export default {
   padding: 24/360 * 100vw;
 }
 .btnClose {
+  margin-top: 24/360 * 100vw;
   .iconfont {
     font-size: 28/360 * 100vw;
   }
@@ -42,25 +40,13 @@ export default {
     color: #d81e06;
   }
 }
-.inputWrapper {
-  padding-bottom: 16/360 * 100vw;
-  input {
-    width: 100%;
-    height: 48/360 * 100vw;
-    line-height: 48/360 * 100vw;
-    font-size: 18/360 * 100vw;
-    border: none;
-    outline: none;
-    border-bottom: 1px solid #333;
-  }
-}
 .btnSubmit {
   padding-top: 26/360 * 100vw;
   button {
     width: 100%;
     // height: 48/360*100vw;
     line-height: 48/360 * 100vw;
-    font-size: 18px;
+    font-size: 18/360 * 100vw;
     background: #cc3300;
     color: white;
     border: none;
