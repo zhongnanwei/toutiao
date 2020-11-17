@@ -1,12 +1,37 @@
 <template>
   <div class="inputWrapper">
-    <input :type="type" :placeholder="placeholder" />
+    <input
+      :class="{ error: !isOk }"
+      :type="type"
+      :placeholder="placeholder"
+      v-model="value"
+      :pattern="pattern"
+      @blur="showErrMsg"
+    />
+    <span v-show="isshow">{{ errMsg }}</span>
   </div>
 </template>
 
 <script>
 export default {
-  props: ["type", "placeholder"],
+  props: ["type", "placeholder", "pattern", "errMsg"],
+  data() {
+    return {
+      value: "",
+      isOk: true,
+      isshow: false,
+    };
+  },
+  methods: {
+    showErrMsg() {
+      this.isshow = !this.isOk;
+    },
+  },
+  watch: {
+    value(newVal) {
+      this.isOk = this.pattern.test(newVal);
+    },
+  },
 };
 </script>
 
@@ -21,6 +46,13 @@ export default {
     border: none;
     outline: none;
     border-bottom: 2px solid #333;
+  }
+  span {
+    color: red;
+    font-size: 12/360 * 100vw;
+  }
+  .error {
+    border-color: red;
   }
 }
 </style>

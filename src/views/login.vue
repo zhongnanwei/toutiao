@@ -6,8 +6,18 @@
     <div class="logo">
       <span class="iconfont iconnew"></span>
     </div>
-    <InputBar type="text" placeholder="用户名 / 手机号码"></InputBar>
-    <InputBar type="password" placeholder="密码"></InputBar>
+    <InputBar
+      type="text"
+      placeholder="用户名"
+      :pattern="/^.{6}$/"
+      errMsg="请输入正确用户名(6位字母，数字或者文字)"
+    ></InputBar>
+    <InputBar
+      type="password"
+      placeholder="密码"
+      :pattern="/^\d{6,12}$/"
+      errMsg="请输入合法密码(6-12位数字)"
+    ></InputBar>
     <div class="btnSubmit">
       <button>登录</button>
     </div>
@@ -44,7 +54,6 @@ export default {
   padding-top: 26/360 * 100vw;
   button {
     width: 100%;
-    // height: 48/360*100vw;
     line-height: 48/360 * 100vw;
     font-size: 18/360 * 100vw;
     background: #cc3300;

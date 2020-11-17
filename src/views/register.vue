@@ -6,12 +6,27 @@
     <div class="logo">
       <span class="iconfont iconnew"></span>
     </div>
-    <InputBar type="text" placeholder="用户名 / 手机号码"></InputBar>
-    <InputBar type="text" placeholder="昵称"></InputBar>
-    <InputBar type="password" placeholder="密码"></InputBar>
-    <div class="btnSubmit">
-      <button>登录</button>
-    </div>
+    <InputBar
+      type="text"
+      placeholder="用户名"
+      :pattern="/^.{6}$/"
+      errMsg="请输入正确用户名(6位字母，数字或者文字)"
+    ></InputBar>
+    <InputBar
+      type="text"
+      placeholder="昵称"
+      :pattern="/^.{3,8}$/"
+      errMsg="请输入昵称 (3-8位字母，数字或者文字)"
+    ></InputBar>
+    <InputBar
+      type="password"
+      placeholder="密码"
+      :pattern="/^\d{6,12}$/"
+      errMsg="请输入合法密码(6-12位数字)"
+    ></InputBar>
+    <router-link class="btnSubmit" to="/login">
+      <button>注册</button>
+    </router-link>
     <Wrap></Wrap>
   </div>
 </template>
