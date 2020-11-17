@@ -8,7 +8,7 @@
       :pattern="pattern"
       @blur="showErrMsg"
     />
-    <span v-show="isshow">{{ errMsg }}</span>
+    <span v-show="isShow">{{ errMsg }}</span>
   </div>
 </template>
 
@@ -19,12 +19,12 @@ export default {
     return {
       value: "",
       isOk: true,
-      isshow: false,
+      isShow: false,
     };
   },
   methods: {
     showErrMsg() {
-      this.isshow = !this.isOk;
+      this.isShow = !this.isOk;
     },
   },
   watch: {
@@ -38,6 +38,7 @@ export default {
 <style lang="less">
 .inputWrapper {
   padding-bottom: 16/360 * 100vw;
+
   input {
     width: 100%;
     height: 48/360 * 100vw;
@@ -45,6 +46,7 @@ export default {
     font-size: 18/360 * 100vw;
     border: none;
     outline: none;
+    background-color: inherit;
     border-bottom: 2px solid #333;
   }
   span {
