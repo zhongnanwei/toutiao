@@ -4,6 +4,8 @@ import VueRouter from 'vue-router'
 import Home from '@/views/Home.vue'
 import Login from '@/views/login.vue'
 import Register from '@/views/register.vue'
+import EditPage from '@/views/editpage.vue'
+import Personal from '@/views/personal.vue'
 
 Vue.use(VueRouter)
 
@@ -22,6 +24,16 @@ const routes = [
     path: '/register',
     name: 'Register',
     component: Register
+  },
+  {
+    path: '/personal',
+    name: 'Personal',
+    component: Personal
+  },
+  {
+    path: '/editpage',
+    name: 'EditPage',
+    component: EditPage
   }
 ]
 

@@ -5,13 +5,22 @@
       <div class="logo">
         <span class="iconfont iconnew"></span>
       </div>
-      <div class="search">
+      <div class="search" @click="getList">
         <span class="iconfont iconsearch"></span>搜索新闻
       </div>
-      <div class="user">
+      <router-link class="user" to="/login">
         <span class="iconfont iconwode"></span>
-      </div>
+      </router-link>
     </header>
+    <ul class="toptab">
+      <li>关注</li>
+      <li>头条</li>
+      <li>娱乐</li>
+      <li>体育</li>
+      <li>汽车</li>
+      <li>房产</li>
+      <li><span class="iconfont iconjiantou1"></span></li>
+    </ul>
   </div>
 </template>
 
@@ -19,7 +28,20 @@
 import Wrap from "../components/wrap.vue";
 export default {
   components: { Wrap },
-  methods: {},
+  methods: {
+    getList() {
+      const Authorization = localStorage.getItem("token");
+      // axios 使用方式
+      this.$axios({
+        method: "get",
+        url: "http://localhost:3000/list?pageIndex=1&pageSize=10",
+        header: { Authorization },
+        // 这里注意,成功回调 不再是 success
+      }).then((res) => {
+        console.log(res);
+      });
+    },
+  },
 };
 </script>
 
@@ -59,6 +81,24 @@ header {
     .iconfont {
       font-size: 32/360 * 100vw;
       color: #eee;
+    }
+  }
+}
+ul.toptab {
+  position: absolute;
+  left: 0px;
+  top: 73/360 * 100vw;
+  width: 100vw;
+  height: 43/360 * 100vw;
+  background-color: rgba(228, 228, 228, 1);
+  display: flex;
+  li {
+    flex: 1;
+    text-align: center;
+    line-height: 43/360 * 100vw;
+    font-size: 16/360 * 100vw;
+    span {
+      font-size: 21/360 * 100vw;
     }
   }
 }

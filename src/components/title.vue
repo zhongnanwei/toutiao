@@ -15,15 +15,11 @@ export default {
 
 <style lang="less" scoped>
 .header {
-  position: absolute;
-  top: 24/360 * 100vw;
-  left: 0;
+  margin-top: 24/360 * 100vw;
   width: 100vw;
   height: 49/360 * 100vw;
   padding-top: 1px;
   line-height: 49/360 * 100vw;
-  border: none;
-  background-color: #f8f8f8;
   .logo {
     float: left;
 
