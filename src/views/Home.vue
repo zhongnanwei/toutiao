@@ -19,6 +19,7 @@
 import Wrap from "../components/wrap.vue";
 export default {
   components: { Wrap },
+  methods: {},
 };
 </script>
 

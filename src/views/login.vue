@@ -11,15 +11,17 @@
       placeholder="用户名"
       :pattern="/^.{6}$/"
       errMsg="请输入正确用户名(6位字母，数字或者文字)"
+      @setValue="setUserName"
     ></InputBar>
     <InputBar
       type="password"
       placeholder="密码"
       :pattern="/^\d{6,12}$/"
       errMsg="请输入合法密码(6-12位数字)"
+      @setValue="setPassword"
     ></InputBar>
     <div class="btnSubmit">
-      <button>登录</button>
+      <button @click="login">登录</button>
     </div>
     <Wrap></Wrap>
   </div>
@@ -30,6 +32,42 @@ import Wrap from "../components/wrap.vue";
 import InputBar from "../components/inputBar.vue";
 export default {
   components: { Wrap, InputBar },
+  data() {
+    return {
+      username: "",
+      password: "",
+    };
+  },
+  methods: {
+    setUserName(newVal) {
+      this.username = newVal;
+    },
+    setPassword(newVal) {
+      this.password = newVal;
+    },
+    login() {
+      // axios 使用方式
+      this.$axios({
+        method: "post",
+        url: "http://liangwei.tech:3000/login",
+        // jq 的 type 变成了 method
+        data: {
+          username: this.username,
+          password: this.password,
+        },
+        // 这里注意,成功回调 不再是 success
+      }).then((res) => {
+        console.log(res);
+        if (res.data.statusCode === 401) {
+          this.$toast.fail(res.data.message);
+        } else {
+          this.$toast.success(res.data.message);
+          localStorage.setItem("token", res.data.data.token);
+          this.$router.replace({ path: "/" });
+        }
+      });
+    },
+  },
 };
 </script>
 

@@ -29,6 +29,7 @@ export default {
   watch: {
     value(newVal) {
       this.isOk = this.pattern.test(newVal);
+      this.$emit("setValue", newVal);
     },
   },
 };

@@ -11,22 +11,25 @@
       placeholder="用户名"
       :pattern="/^.{6}$/"
       errMsg="请输入正确用户名(6位字母，数字或者文字)"
+      @setValue="setUserName"
     ></InputBar>
     <InputBar
       type="text"
       placeholder="昵称"
       :pattern="/^.{3,8}$/"
       errMsg="请输入昵称 (3-8位字母，数字或者文字)"
+      @setValue="setNickName"
     ></InputBar>
     <InputBar
       type="password"
       placeholder="密码"
       :pattern="/^\d{6,12}$/"
       errMsg="请输入合法密码(6-12位数字)"
+      @setValue="setPassword"
     ></InputBar>
-    <router-link class="btnSubmit" to="/login">
-      <button>注册</button>
-    </router-link>
+    <div class="btnSubmit">
+      <button @click="register">注册</button>
+    </div>
     <Wrap></Wrap>
   </div>
 </template>
@@ -36,6 +39,45 @@ import Wrap from "../components/wrap.vue";
 import InputBar from "../components/inputBar.vue";
 export default {
   components: { Wrap, InputBar },
+  data() {
+    return {
+      username: "",
+      password: "",
+      nickname: "",
+    };
+  },
+  methods: {
+    setUserName(newVal) {
+      this.username = newVal;
+    },
+    setNickName(newVal) {
+      this.nickname = newVal;
+    },
+    setPassword(newVal) {
+      this.password = newVal;
+    },
+    register() {
+      // axios 使用方式
+      this.$axios({
+        method: "post",
+        url: "http://liangwei.tech:3000/register",
+        // jq 的 type 变成了 method
+        data: {
+          username: this.username,
+          nickname: this.nickname,
+          password: this.password,
+        },
+        // 这里注意,成功回调 不再是 success
+      }).then((res) => {
+        if (res.data.statusCode === 400) {
+          this.$toast.fail(res.data.message);
+        } else {
+          this.$toast(res.data.message);
+          this.$router.replace({ path: "login" });
+        }
+      });
+    },
+  },
 };
 </script>
 
