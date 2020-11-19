@@ -8,7 +8,6 @@
       :pattern="pattern"
       @blur="showErrMsg"
     />
-    <span v-show="isShow">{{ errMsg }}</span>
   </div>
 </template>
 
@@ -24,7 +23,7 @@ export default {
   },
   methods: {
     showErrMsg() {
-      this.isShow = !this.isOk;
+      if (!this.isOk) this.$toast.fail(this.errMsg);
     },
   },
   watch: {
