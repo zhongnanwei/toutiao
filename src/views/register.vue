@@ -60,7 +60,7 @@ export default {
       // axios 使用方式
       this.$axios({
         method: "post",
-        url: "http://liangwei.tech:3000/register",
+        url: "http://localhost:3000/register",
         // jq 的 type 变成了 method
         data: {
           username: this.username,

@@ -5,7 +5,7 @@
       <div class="logo">
         <span class="iconfont iconnew"></span>
       </div>
-      <div class="search" @click="getList">
+      <div class="search">
         <span class="iconfont iconsearch"></span>搜索新闻
       </div>
       <router-link class="user" to="/login">
@@ -28,19 +28,17 @@
 import Wrap from "../components/wrap.vue";
 export default {
   components: { Wrap },
-  methods: {
-    getList() {
-      const Authorization = localStorage.getItem("token");
-      // axios 使用方式
-      this.$axios({
-        method: "get",
-        url: "http://localhost:3000/list?pageIndex=1&pageSize=10",
-        header: { Authorization },
-        // 这里注意,成功回调 不再是 success
-      }).then((res) => {
-        console.log(res);
-      });
-    },
+  created() {
+    const Authorization = localStorage.getItem("token");
+    // axios 使用方式
+    this.$axios({
+      method: "get",
+      url: "http://localhost:3000/post",
+      header: { Authorization },
+      // 这里注意,成功回调 不再是 success
+    }).then((res) => {
+      console.log(res);
+    });
   },
 };
 </script>

@@ -22,6 +22,6 @@ export default {
 <style lang="less" scoped>
 .content {
   width: 100vw;
-  height: 100px;
+  height: 100 /360 * 100vw;
 }
 </style>

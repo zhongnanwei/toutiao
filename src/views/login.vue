@@ -49,7 +49,7 @@ export default {
       // axios 使用方式
       this.$axios({
         method: "post",
-        url: "http://liangwei.tech:3000/login",
+        url: "http://localhost:3000/login",
         // jq 的 type 变成了 method
         data: {
           username: this.username,
@@ -57,13 +57,13 @@ export default {
         },
         // 这里注意,成功回调 不再是 success
       }).then((res) => {
-        console.log(res);
         if (res.data.statusCode === 401) {
           this.$toast.fail(res.data.message);
         } else {
           this.$toast.success(res.data.message);
           localStorage.setItem("token", res.data.data.token);
-          this.$router.replace({ path: "/" });
+          localStorage.setItem("userId", res.data.data.user.id);
+          this.$router.replace({ path: "/personal" });
         }
       });
     },
