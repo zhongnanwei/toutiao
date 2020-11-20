@@ -22,7 +22,9 @@
         </div>
         <div class="date">{{ userInfo.create_date }}</div>
       </div>
-      <span class="iconfont iconjiantou1"></span>
+      <router-link to="/editpage">
+          <span class="iconfont iconjiantou1"></span>
+      </router-link>
     </header>
     <div class="line"></div>
     <UserInfo
@@ -61,8 +63,11 @@ export default {
       headers: { Authorization },
       // 这里注意,成功回调 不再是 success
     }).then((res) => {
-      this.userInfo = res.data.data;
-      this.userInfo.create_date=this.userInfo.create_date.split("T")[0]
+      const { message, data } = res.data;
+      if (message === "获取成功") {
+        this.userInfo = data;
+        this.userInfo.create_date = this.userInfo.create_date.split("T")[0];
+      }
     });
   },
 };
