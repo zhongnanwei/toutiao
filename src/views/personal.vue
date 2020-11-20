@@ -2,13 +2,13 @@
   <div>
     <Wrap></Wrap>
     <header>
-      <!-- <img
+      <img
         v-if="userInfo.head_img"
-        :src="baseURL+userInfo.head_img"
+        :src="baseURL + userInfo.head_img"
         alt=""
         class="avatar"
-      /> -->
-      <img src="../assets/meinv.jpeg" alt="" class="avatar" />
+      />
+      <img v-else src="../assets/meinv.jpeg" alt="" class="avatar" />
       <div class="info">
         <div class="name">
           <span
@@ -20,7 +20,7 @@
           ></span>
           {{ userInfo.nickname || userInfo.username }}
         </div>
-        <div class="date">2001-12-12</div>
+        <div class="date">{{ userInfo.create_date }}</div>
       </div>
       <span class="iconfont iconjiantou1"></span>
     </header>
@@ -62,6 +62,7 @@ export default {
       // 这里注意,成功回调 不再是 success
     }).then((res) => {
       this.userInfo = res.data.data;
+      this.userInfo.create_date=this.userInfo.create_date.split("T")[0]
     });
   },
 };
