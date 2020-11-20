@@ -85,7 +85,7 @@ export default {
         height: 35 /360 * 100vw;
         border: 1px solid #ccc;
         text-align: center;
-        line-height: 40 /360 * 100vw;
+        line-height: 35 /360 * 100vw;
         font-size: 4.44444444vw;
       }
     }

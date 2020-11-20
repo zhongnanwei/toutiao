@@ -19,7 +19,7 @@
       <li>体育</li>
       <li>汽车</li>
       <li>房产</li>
-      <li><span class="iconfont iconjiantou1"></span></li>
+      <li><span class="iconfont iconjiantou1" @click="jumpToBanner"></span></li>
     </ul>
   </div>
 </template>
@@ -28,6 +28,11 @@
 import Wrap from "../components/wrap.vue";
 export default {
   components: { Wrap },
+  methods: {
+    jumpToBanner() {
+      this.$router.push({ path: "banner" });
+    },
+  },
   created() {
     const Authorization = localStorage.getItem("token");
     // axios 使用方式
