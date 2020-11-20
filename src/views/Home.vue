@@ -8,7 +8,7 @@
       <div class="search">
         <span class="iconfont iconsearch"></span>搜索新闻
       </div>
-      <router-link class="user" to="/login">
+      <router-link class="user" to="/personal">
         <span class="iconfont iconwode"></span>
       </router-link>
     </header>
@@ -33,11 +33,11 @@ export default {
     // axios 使用方式
     this.$axios({
       method: "get",
-      url: "http://localhost:3000/post",
-      header: { Authorization },
+      url: "http://localhost:3000/category?pageSize=6",
+      headers: { Authorization },
       // 这里注意,成功回调 不再是 success
     }).then((res) => {
-      console.log(res);
+      console.log(res.data.data);
     });
   },
 };

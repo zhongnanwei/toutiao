@@ -6,6 +6,7 @@ import Login from '@/views/login.vue'
 import Register from '@/views/register.vue'
 import EditPage from '@/views/editpage.vue'
 import Personal from '@/views/personal.vue'
+import Banner from '@/views/banner.vue'
 
 Vue.use(VueRouter)
 
@@ -34,6 +35,11 @@ const routes = [
     path: '/editpage',
     name: 'EditPage',
     component: EditPage
+  },
+  {
+    path: '/banner',
+    name: 'Banner',
+    component: Banner
   }
 ]
 
@@ -45,7 +51,7 @@ router.beforeEach((to, from, next) => {
     if (localStorage.getItem('token')) {
       return next();
     } else {
-      return router.push('/login')
+      return router.push('/login').catch(err => { })
     }
   }
   next();

@@ -23,6 +23,9 @@
     <div class="btnSubmit">
       <button @click="login">登录</button>
     </div>
+    <router-link class="register" to="register">
+      还没账号啊? 赶紧去注册一个吧
+    </router-link>
     <Wrap></Wrap>
   </div>
 </template>
@@ -56,19 +59,16 @@ export default {
           password: this.password,
         },
         // 这里注意,成功回调 不再是 success
-      })
-        .then((res) => {
-          if (res.data.statusCode === 401) {
-            this.$toast.fail(res.data.message);
-          } else {
-            this.$toast.success(res.data.message);
-            localStorage.setItem("token", res.data.data.token);
-            localStorage.setItem("userId", res.data.data.user.id);
-            this.$router.replace({ path: "/personal" });
-          }
-        })
-        //对非影响到功能的异常处理
-        .catch((err) => {});
+      }).then((res) => {
+        if (res.data.statusCode === 401) {
+          this.$toast.fail(res.data.message);
+        } else {
+          this.$toast.success(res.data.message);
+          localStorage.setItem("token", res.data.data.token);
+          localStorage.setItem("userId", res.data.data.user.id);
+          this.$router.replace({ path: "/personal" });
+        }
+      });
     },
   },
 };
@@ -97,11 +97,17 @@ export default {
     width: 100%;
     line-height: 48/360 * 100vw;
     font-size: 18/360 * 100vw;
+    margin-bottom: 30 /360 * 100vw;
     background: #cc3300;
     color: white;
     border: none;
     outline: none;
     border-radius: 24/360 * 100vw;
   }
+}
+.register {
+  margin-left: 65 /360 * 100vw;
+  color: #cc3300;
+  font-size: 12/360 * 100vw;
 }
 </style>
