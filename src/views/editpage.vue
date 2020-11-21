@@ -15,7 +15,7 @@
       title="昵称"
       :text="userInfo.nickname || userInfo.username"
     ></UserInfo>
-    <UserInfo title="密码" :text="userInfo.password"></UserInfo>
+    <UserInfo title="密码" text="******"></UserInfo>
     <UserInfo title="性别" v-if="userInfo.gender" text="男"></UserInfo>
     <UserInfo title="性别" v-else text="女"></UserInfo>
   </div>
@@ -44,11 +44,7 @@ export default {
       // 这里注意,成功回调 不再是 success
     }).then((res) => {
       const { message, data } = res.data;
-      if (message === "获取成功") {
-        this.userInfo = data;
-        const password = this.userInfo.password;
-        this.userInfo.password = password.replace(password, "******");
-      }
+      if (message === "获取成功") this.userInfo = data;
     });
   },
 };

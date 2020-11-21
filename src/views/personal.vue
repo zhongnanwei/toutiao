@@ -1,7 +1,7 @@
 <template>
   <div>
     <Wrap></Wrap>
-    <header>
+    <header @click="$router.push('/editpage')">
       <img
         v-if="userInfo.head_img"
         :src="baseURL + userInfo.head_img"
@@ -22,16 +22,11 @@
         </div>
         <div class="date">{{ userInfo.create_date }}</div>
       </div>
-      <router-link to="/editpage">
-          <span class="iconfont iconjiantou1"></span>
-      </router-link>
+
+      <span class="iconfont iconjiantou1"></span>
     </header>
     <div class="line"></div>
-    <UserInfo
-      title="我的关注"
-      text="关注的用户"
-      @click.native="logText"
-    ></UserInfo>
+    <UserInfo title="我的关注" text="关注的用户"></UserInfo>
     <UserInfo title="我的跟帖" text="跟帖/回复"></UserInfo>
     <UserInfo title="我的收藏" text="文章/视频"></UserInfo>
     <UserInfo title="设置"></UserInfo>
@@ -48,11 +43,6 @@ export default {
       baseURL: "http://localhost:3000",
       userInfo: {},
     };
-  },
-  methods: {
-    logText() {
-      console.log(1);
-    },
   },
   created() {
     const Authorization = localStorage.getItem("token");

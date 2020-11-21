@@ -29,7 +29,8 @@ const routes = [
   {
     path: '/personal',
     name: 'Personal',
-    component: Personal
+    component: Personal,
+    // meta: { needAuth: true }
   },
   {
     path: '/editpage',
@@ -48,7 +49,7 @@ const router = new VueRouter({
 })
 router.beforeEach((to, from, next) => {
   //1.对象存储法
-  //2.路由meta设置
+  //2.路由meta设置判断方法 if(to.meta.needAuth)
   const pageAuth = ['/personal', '/editpage'];
   if (pageAuth.includes(to.path)) {
     if (localStorage.getItem('token')) {

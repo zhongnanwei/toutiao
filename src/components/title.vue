@@ -1,7 +1,7 @@
 <template>
   <div class="header">
     <div class="logo">
-      <span class="iconfont iconjiantou"></span>
+      <span class="iconfont iconjiantou" @click="$router.back()"></span>
     </div>
     <span>{{ title }}</span>
   </div>
@@ -19,10 +19,8 @@ export default {
   width: 100vw;
   height: 49/360 * 100vw;
   line-height: 49/360 * 100vw;
-
   .logo {
     float: left;
-
     .iconfont {
       margin-left: 18/360 * 100vw;
       font-size: 15/360 * 100vw;

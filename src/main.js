@@ -19,14 +19,13 @@ axios.interceptors.response.use(response => {
     Toast.fail(response.data.message)
   }
   //个人信息拦截器
-  if (response.data, message == '用户信息验证失败') {
+  if (response.data.message == '用户信息验证失败') {
     localStorage.removeItem('token');
     localStorage.removeItem('userId');
     router.replace('/login');
     Toast.fail('信息获取出错，请重新登录');
   }
   return response;
-
 }, error => {
   return Promise.reject(error);
 });
