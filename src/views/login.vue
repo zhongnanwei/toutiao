@@ -52,7 +52,7 @@ export default {
       // axios 使用方式
       this.$axios({
         method: "post",
-        url: "http://localhost:3000/login",
+        url: "/login",
         // jq 的 type 变成了 method
         data: {
           username: this.username,

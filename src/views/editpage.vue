@@ -39,7 +39,7 @@ export default {
     // axios 使用方式
     this.$axios({
       method: "get",
-      url: "http://localhost:3000/user/" + localStorage.getItem("userId"),
+      url: "/user/" + localStorage.getItem("userId"),
       headers: { Authorization },
       // 这里注意,成功回调 不再是 success
     }).then((res) => {

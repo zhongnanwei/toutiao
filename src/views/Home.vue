@@ -21,6 +21,20 @@
       <li>房产</li>
       <li><span class="iconfont iconjiantou1" @click="jumpToBanner"></span></li>
     </ul>
+    <main>
+      <ul>
+        <li v-for="(item, index) in postList" :key="index">
+          <p>{{ item.title }}</p>
+          <dd class="picture">
+            <dl v-for="(img, idx) in item.cover" :key="idx">
+              <img :src="img.url" alt="" />
+            </dl>
+          </dd>
+          <span>{{ item.user.nickname }}</span>
+          <label>{{ item.open }}</label>
+        </li>
+      </ul>
+    </main>
   </div>
 </template>
 
@@ -28,6 +42,11 @@
 import Wrap from "../components/wrap.vue";
 export default {
   components: { Wrap },
+  data() {
+    return {
+      postList: [],
+    };
+  },
   methods: {
     jumpToBanner() {
       this.$router.push({ path: "banner" });
@@ -38,11 +57,12 @@ export default {
     // axios 使用方式
     this.$axios({
       method: "get",
-      url: "http://localhost:3000/category?pageSize=6",
+      url: "/post?pageSize=3",
       headers: { Authorization },
       // 这里注意,成功回调 不再是 success
     }).then((res) => {
       console.log(res.data.data);
+      this.postList = res.data.data;
     });
   },
 };
@@ -102,6 +122,28 @@ ul.toptab {
     font-size: 16/360 * 100vw;
     span {
       font-size: 21/360 * 100vw;
+    }
+  }
+}
+main {
+  margin-top: 11.94444444vw;
+  ul {
+    li {
+      width: 100vw;
+      height: 150 /360 * 100vw;
+      padding: 10 /360 * 100vw;
+      dd {
+        height: 80/360 * 100vw;
+        dl {
+          height: 80 /360 * 100vw;
+          width: 100 /360 * 100vw;
+          float: left;
+          img {
+            width: 100%;
+            height: 100%;
+          }
+        }
+      }
     }
   }
 }

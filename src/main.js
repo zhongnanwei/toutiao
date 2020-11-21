@@ -10,6 +10,7 @@ import 'vant/lib/index.css'
 Vue.use(Vant)
 //绑定到原型，调用只需要this.$axios获取
 Vue.prototype.$axios = axios
+axios.defaults.baseURL = "http://localhost:3000"
 Vue.config.productionTip = false
 new Vue({
   router,
