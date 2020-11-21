@@ -60,10 +60,13 @@ export default {
         },
         // 这里注意,成功回调 不再是 success
       }).then((res) => {
+        console.log(res);
+        if (res.data.message === "登录成功") {
           this.$toast.success(res.data.message);
           localStorage.setItem("token", res.data.data.token);
           localStorage.setItem("userId", res.data.data.user.id);
           this.$router.replace({ path: "/personal" });
+        }
       });
     },
   },

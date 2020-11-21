@@ -15,15 +15,20 @@ axios.defaults.baseURL = "http://localhost:3000"
 //添加拦截器，再返回给页面
 axios.interceptors.response.use(response => {
   const errCodePattern = /^4\d{2}$/;
-  if (errCodePattern.test(res.data.statusCode)) {
-    Toast.fail(res.data.message)
-  } else {
-    return response;
+  if (errCodePattern.test(response.data.statusCode)) {
+    Toast.fail(response.data.message)
   }
-}, error => {
+  //个人信息拦截器
+  if (response.data, message == '用户信息验证失败') {
+    localStorage.removeItem('token');
+    localStorage.removeItem('userId');
+    router.replace('/login');
+    Toast.fail('信息获取出错，请重新登录');
+  }
+  return response;
 
-  return Promise.
-    eject(error);
+}, error => {
+  return Promise.reject(error);
 });
 Vue.config.productionTip = false
 new Vue({

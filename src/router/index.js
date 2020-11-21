@@ -47,7 +47,10 @@ const router = new VueRouter({
   routes
 })
 router.beforeEach((to, from, next) => {
-  if (to.path == '/personal') {
+  //1.对象存储法
+  //2.路由meta设置
+  const pageAuth = ['/personal', '/editpage'];
+  if (pageAuth.includes(to.path)) {
     if (localStorage.getItem('token')) {
       return next();
     } else {
