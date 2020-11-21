@@ -69,12 +69,8 @@ export default {
         },
         // 这里注意,成功回调 不再是 success
       }).then((res) => {
-        if (res.data.statusCode === 400) {
-          this.$toast.fail(res.data.message);
-        } else {
-          this.$toast(res.data.message);
-          this.$router.replace({ path: "login" });
-        }
+        this.$toast(res.data.message);
+        this.$router.replace({ path: "login" });
       });
     },
   },

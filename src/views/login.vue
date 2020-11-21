@@ -60,14 +60,10 @@ export default {
         },
         // 这里注意,成功回调 不再是 success
       }).then((res) => {
-        if (res.data.statusCode === 401) {
-          this.$toast.fail(res.data.message);
-        } else {
           this.$toast.success(res.data.message);
           localStorage.setItem("token", res.data.data.token);
           localStorage.setItem("userId", res.data.data.user.id);
           this.$router.replace({ path: "/personal" });
-        }
       });
     },
   },

@@ -67,6 +67,10 @@ export default {
       if (message === "获取成功") {
         this.userInfo = data;
         this.userInfo.create_date = this.userInfo.create_date.split("T")[0];
+      }else{
+        localStorage.removeItem('token');
+        localStorage.removeItem('userId');
+        this.$toast.fail('信息获取出错');
       }
     });
   },
