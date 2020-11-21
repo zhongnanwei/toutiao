@@ -3,11 +3,16 @@ import App from './App.vue'
 import router from './router'
 // 1. 导入组件库
 import Vant, { Toast } from 'vant'
+import { Dialog } from 'vant'
+import { ActionSheet } from 'vant';
 import axios from 'axios'
 // 2. 引入组件 css 文件
 import 'vant/lib/index.css'
 // 3. 注册 vant ui 组件库的标签
 Vue.use(Vant)
+// 全局注册
+Vue.use(Dialog);
+Vue.use(ActionSheet);
 //绑定到原型，调用只需要this.$axios获取
 Vue.prototype.$axios = axios
 //设置基准路径
