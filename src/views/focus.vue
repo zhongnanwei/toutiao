@@ -3,7 +3,7 @@
     <Wrap></Wrap>
     <Title title="我的关注"></Title>
     <ul>
-      <li v-for="(item, index) in userInfo" :key="index">
+      <li v-for="item in userInfo" :key="item.id">
         <img
           v-if="item.head_img"
           :src="$axios.defaults.baseURL + item.head_img"
@@ -43,18 +43,20 @@ export default {
         this.$toast.success(res.data.message);
       });
     },
+    initFocus() {
+      this.$axios({
+        method: "get",
+        url: "/user_follows",
+        // 这里注意,成功回调 不再是 success
+      }).then((res) => {
+        if (res.status === 200) {
+          this.userInfo = res.data.data;
+        }
+      });
+    },
   },
   created() {
-    this.$axios({
-      method: "get",
-      url: "/user_follows",
-      // 这里注意,成功回调 不再是 success
-    }).then((res) => {
-      if (res.status === 200) {
-        console.log(res);
-        this.userInfo = res.data.data;
-      }
-    });
+    initFocus();
   },
 };
 </script>
