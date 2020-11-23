@@ -3,13 +3,15 @@
     <Wrap></Wrap>
     <Title title="编辑资料"></Title>
     <div class="content">
-      <img
-        v-if="userInfo.head_img"
-        :src="$axios.defaults.baseURL + userInfo.head_img"
-        alt=""
-        class="avatar"
-      />
-      <img v-else src="../assets/meinv.jpeg" alt="" class="avatar" />
+      <van-uploader :after-read="afterRead" multiple>
+        <img
+          v-if="userInfo.head_img"
+          :src="$axios.defaults.baseURL + userInfo.head_img"
+          alt=""
+          class="avatar"
+        />
+        <img v-else src="../assets/meinv.jpeg" alt="" class="avatar" />
+      </van-uploader>
     </div>
     <UserInfo
       title="昵称"
@@ -34,7 +36,7 @@
       v-model="showNickName"
       title="修改昵称"
       show-cancel-button
-      @confirm="setUserInfo('nickname')"
+      @confirm="setUserInfo({ nickname: value })"
     >
       <van-field v-model="value" placeholder="请输入昵称" />
     </van-dialog>
@@ -43,7 +45,7 @@
       v-model="showPassword"
       title="修改密码"
       show-cancel-button
-      @confirm="setUserInfo('password')"
+      @confirm="setUserInfo({ password: value })"
     >
       <van-field v-model="value" placeholder="请输入密码" type="password" />
     </van-dialog>
@@ -53,7 +55,7 @@
       :actions="actions"
       cancel-text="取消"
       close-on-click-action
-      @select="setUserInfo('gender')"
+      @select="editSex"
     />
   </div>
 </template>
@@ -75,6 +77,7 @@ export default {
         { name: "女", gender: "0" },
       ],
       value: "",
+      fileList: [],
     };
   },
   methods: {
@@ -87,17 +90,32 @@ export default {
         if (message === "获取成功") this.userInfo = data;
       });
     },
-    setUserInfo(userInfo) {
+    editSex(user) {
+      // 默认情况下点击选项时不会自动收起
+      // 可以通过 close-on-click-action 属性开启自动收起
+      this.show = false;
+      this.setUserInfo({ gender: user.gender });
+    },
+    setUserInfo(data) {
       // axios 使用方式
       this.$axios({
         method: "post",
         url: "/user_update/" + localStorage.getItem("userId"),
-        data: {
-          [userInfo]: this.value,
-        },
+        data,
         // 这里注意,成功回调 不再是 success
       }).then((res) => {
         this.getUserInfo();
+      });
+    },
+    afterRead(fileObj) {
+      const form = new FormData();
+      form.append("file", fileObj.file);
+      this.$axios({
+        method: "post",
+        url: "/upload",
+        data: form,
+      }).then((res) => {
+        this.setUserInfo({ head_img: res.data.data.url });
       });
     },
   },

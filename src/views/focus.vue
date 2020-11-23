@@ -56,7 +56,7 @@ export default {
     },
   },
   created() {
-    initFocus();
+    this.initFocus();
   },
 };
 </script>
