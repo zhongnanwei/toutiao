@@ -36,12 +36,10 @@ export default {
     };
   },
   created() {
-    const Authorization = localStorage.getItem("token");
     // axios 使用方式
     this.$axios({
       method: "get",
       url: "/category",
-      headers: { Authorization },
       // 这里注意,成功回调 不再是 success
     }).then((res) => {
       if (res.status === 200) {

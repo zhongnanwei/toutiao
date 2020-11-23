@@ -70,37 +70,33 @@ export default {
       showNickName: false,
       showPassword: false,
       showGender: false,
-      actions: [{ name: "男" }, { name: "女" }],
+      actions: [
+        { name: "男", gender: "1" },
+        { name: "女", gender: "0" },
+      ],
       value: "",
     };
   },
   methods: {
     getUserInfo() {
-      const Authorization = localStorage.getItem("token");
-      // axios 使用方式
       this.$axios({
         method: "get",
         url: "/user/" + localStorage.getItem("userId"),
-        headers: { Authorization },
-        // 这里注意,成功回调 不再是 success
       }).then((res) => {
         const { message, data } = res.data;
         if (message === "获取成功") this.userInfo = data;
       });
     },
     setUserInfo(userInfo) {
-      const Authorization = localStorage.getItem("token");
       // axios 使用方式
       this.$axios({
         method: "post",
         url: "/user_update/" + localStorage.getItem("userId"),
-        headers: { Authorization },
         data: {
           [userInfo]: this.value,
         },
         // 这里注意,成功回调 不再是 success
       }).then((res) => {
-        console.log(res);
         this.getUserInfo();
       });
     },

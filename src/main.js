@@ -34,6 +34,13 @@ axios.interceptors.response.use(response => {
 }, error => {
   return Promise.reject(error);
 });
+
+axios.interceptors.request.use(config => {
+  if (!config.headers.Authorization && localStorage.getItem('token'))
+    config.headers.Authorization = localStorage.getItem('token');
+  return config;
+});
+
 Vue.config.productionTip = false
 new Vue({
   router,

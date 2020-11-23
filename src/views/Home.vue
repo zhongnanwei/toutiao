@@ -53,15 +53,12 @@ export default {
     },
   },
   created() {
-    const Authorization = localStorage.getItem("token");
     // axios 使用方式
     this.$axios({
       method: "get",
       url: "/post?pageSize=3",
-      headers: { Authorization },
       // 这里注意,成功回调 不再是 success
     }).then((res) => {
-      console.log(res.data.data);
       this.postList = res.data.data;
     });
   },

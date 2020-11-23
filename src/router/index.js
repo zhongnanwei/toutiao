@@ -7,6 +7,7 @@ import Register from '@/views/register.vue'
 import EditPage from '@/views/editpage.vue'
 import Personal from '@/views/personal.vue'
 import Banner from '@/views/banner.vue'
+import Focus from '@/views/focus.vue'
 
 Vue.use(VueRouter)
 
@@ -41,6 +42,11 @@ const routes = [
     path: '/banner',
     name: 'Banner',
     component: Banner
+  },
+  {
+    path: '/focus',
+    name: 'Focus',
+    component: Focus
   }
 ]
 
@@ -50,7 +56,7 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   //1.对象存储法
   //2.路由meta设置判断方法 if(to.meta.needAuth)
-  const pageAuth = ['/personal', '/editpage'];
+  const pageAuth = ['/personal', '/editpage', '/focus'];
   if (pageAuth.includes(to.path)) {
     if (localStorage.getItem('token')) {
       return next();

@@ -4,7 +4,7 @@
     <header @click="$router.push('/editpage')">
       <img
         v-if="userInfo.head_img"
-        :src="baseURL + userInfo.head_img"
+        :src="$axios.defaults.baseURL + userInfo.head_img"
         alt=""
         class="avatar"
       />
@@ -26,7 +26,7 @@
       <span class="iconfont iconjiantou1"></span>
     </header>
     <div class="line"></div>
-    <UserInfo title="我的关注" text="关注的用户"></UserInfo>
+    <UserInfo title="我的关注" text="关注的用户" @click.native="$router.push('/focus')"></UserInfo>
     <UserInfo title="我的跟帖" text="跟帖/回复"></UserInfo>
     <UserInfo title="我的收藏" text="文章/视频"></UserInfo>
     <UserInfo title="设置"></UserInfo>
@@ -40,18 +40,13 @@ export default {
   components: { Wrap, UserInfo },
   data() {
     return {
-      baseURL: "http://localhost:3000",
       userInfo: {},
     };
   },
   created() {
-    const Authorization = localStorage.getItem("token");
-    // axios 使用方式
     this.$axios({
       method: "get",
       url: "/user/" + localStorage.getItem("userId"),
-      headers: { Authorization },
-      // 这里注意,成功回调 不再是 success
     }).then((res) => {
       const { message, data } = res.data;
       if (message === "获取成功") {
