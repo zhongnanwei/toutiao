@@ -26,7 +26,6 @@
     <router-link class="register" to="register">
       还没账号啊? 赶紧去注册一个吧
     </router-link>
-  
   </div>
 </template>
 
@@ -77,7 +76,6 @@ export default {
   padding: 24/360 * 100vw;
 }
 .btnClose {
-  margin-top: 24/360 * 100vw;
   .iconfont {
     font-size: 28/360 * 100vw;
   }

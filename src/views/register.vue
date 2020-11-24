@@ -80,7 +80,6 @@ export default {
   padding: 24/360 * 100vw;
 }
 .btnClose {
-  margin-top: 24/360 * 100vw;
   .iconfont {
     font-size: 28/360 * 100vw;
   }

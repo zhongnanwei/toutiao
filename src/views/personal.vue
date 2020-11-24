@@ -58,7 +58,6 @@ export default {
 
 <style lang="less" scoped>
 header {
-  margin-top: 24 /360 * 100vw;
   display: flex;
   padding: 24 /360 * 100vw 20 /360 * 100vw;
   align-items: center;

@@ -64,7 +64,6 @@ export default {
 
 <style lang="less" scoped>
 header {
-  margin-top: 24/360 * 100vw;
   width: 100vw;
   height: 49/360 * 100vw;
   padding-top: 1px;
