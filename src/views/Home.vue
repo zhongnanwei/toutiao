@@ -1,6 +1,5 @@
 <template>
   <div>
-    <Wrap></Wrap>
     <header>
       <div class="logo">
         <span class="iconfont iconnew"></span>
@@ -12,38 +11,28 @@
         <span class="iconfont iconwode"></span>
       </router-link>
     </header>
-    <ul class="toptab">
-      <li>关注</li>
-      <li>头条</li>
-      <li>娱乐</li>
-      <li>体育</li>
-      <li>汽车</li>
-      <li>房产</li>
-      <li><span class="iconfont iconjiantou1" @click="jumpToBanner"></span></li>
-    </ul>
-    <main>
-      <ul>
-        <li v-for="(item, index) in postList" :key="index">
-          <p>{{ item.title }}</p>
-          <dd class="picture">
-            <dl v-for="(img, idx) in item.cover" :key="idx">
-              <img :src="img.url" alt="" />
-            </dl>
-          </dd>
-          <span>{{ item.user.nickname }}</span>
-          <label>{{ item.open }}</label>
-        </li>
-      </ul>
-    </main>
+    <van-tabs sticky background="#e4e4e4" line-width="0">
+      <van-tab v-for="post in categoryList" :key="post.id" :title="post.name">
+        <PostItem
+          :postData="postData"
+          v-for="postData in postList"
+          :key="postData.id"
+        />
+      </van-tab>
+      <div class="banner">
+        <span class="iconfont iconjiantou1" @click="jumpToBanner"></span>
+      </div>
+    </van-tabs>
   </div>
 </template>
 
 <script>
-import Wrap from "../components/wrap.vue";
+import PostItem from "../components/postItem.vue";
 export default {
-  components: { Wrap },
+  components: { PostItem },
   data() {
     return {
+      categoryList: [],
       postList: [],
     };
   },
@@ -56,7 +45,15 @@ export default {
     // axios 使用方式
     this.$axios({
       method: "get",
-      url: "/post?pageSize=3",
+      url: "/category",
+      // 这里注意,成功回调 不再是 success
+    }).then((res) => {
+      this.categoryList = res.data.data;
+    });
+    // axios 使用方式
+    this.$axios({
+      method: "get",
+      url: "/post",
       // 这里注意,成功回调 不再是 success
     }).then((res) => {
       this.postList = res.data.data;
@@ -74,6 +71,7 @@ header {
   line-height: 49/360 * 100vw;
   background-color: rgba(255, 0, 0, 1);
   border: none;
+  overflow: hidden;
   .logo {
     float: left;
     margin-left: 8/360 * 100vw;
@@ -104,44 +102,15 @@ header {
     }
   }
 }
-ul.toptab {
+.banner {
   position: absolute;
-  left: 0px;
-  top: 73/360 * 100vw;
-  width: 100vw;
-  height: 43/360 * 100vw;
-  background-color: rgba(228, 228, 228, 1);
-  display: flex;
-  li {
-    flex: 1;
-    text-align: center;
-    line-height: 43/360 * 100vw;
-    font-size: 16/360 * 100vw;
-    span {
-      font-size: 21/360 * 100vw;
-    }
-  }
-}
-main {
-  margin-top: 11.94444444vw;
-  ul {
-    li {
-      width: 100vw;
-      height: 150 /360 * 100vw;
-      padding: 10 /360 * 100vw;
-      dd {
-        height: 80/360 * 100vw;
-        dl {
-          height: 80 /360 * 100vw;
-          width: 100 /360 * 100vw;
-          float: left;
-          img {
-            width: 100%;
-            height: 100%;
-          }
-        }
-      }
-    }
-  }
+  right: 0;
+  top: 0;
+  width: 45 /360 * 100vw;
+  height: 44 /360 * 100vw;
+  z-index: 1000;
+  background-color: #e4e4e4;
+  line-height: 44 /360 * 100vw;
+  text-align: center;
 }
 </style>

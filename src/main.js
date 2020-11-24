@@ -6,6 +6,7 @@ import Vant, { Toast } from 'vant'
 import { Dialog } from 'vant'
 import { ActionSheet } from 'vant';
 import axios from 'axios'
+import { Tab, Tabs } from 'vant';
 // 2. 引入组件 css 文件
 import 'vant/lib/index.css'
 // 3. 注册 vant ui 组件库的标签
@@ -13,6 +14,8 @@ Vue.use(Vant)
 // 全局注册
 Vue.use(Dialog);
 Vue.use(ActionSheet);
+Vue.use(Tab);
+Vue.use(Tabs);
 //绑定到原型，调用只需要this.$axios获取
 Vue.prototype.$axios = axios
 //设置基准路径
@@ -41,7 +44,14 @@ axios.interceptors.request.use(config => {
   return config;
 });
 
-Vue.config.productionTip = false
+Vue.filter('imgUrl', (url) => {
+  if (url.indexOf("http") > -1) {
+    return url;
+  } else {
+    return axios.defaults.baseURL + url;
+  }
+})
+Vue.config.productionTip = false;
 new Vue({
   router,
   render: function (h) { return h(App) }

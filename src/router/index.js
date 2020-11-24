@@ -8,6 +8,7 @@ import EditPage from '@/views/editpage.vue'
 import Personal from '@/views/personal.vue'
 import Banner from '@/views/banner.vue'
 import Focus from '@/views/focus.vue'
+import Test from '@/views/Test.vue'
 
 Vue.use(VueRouter)
 
@@ -47,6 +48,11 @@ const routes = [
     path: '/focus',
     name: 'Focus',
     component: Focus
+  },
+  {
+    path: '/test',
+    name: 'Test',
+    component: Test
   }
 ]
 
