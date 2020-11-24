@@ -1,6 +1,5 @@
 <template>
   <div>
-    <Wrap></Wrap>
     <header @click="$router.push('/editpage')">
       <img
         v-if="userInfo.head_img"
@@ -34,10 +33,9 @@
 </template>
 
 <script>
-import Wrap from "../components/wrap.vue";
 import UserInfo from "../components/userInfo.vue";
 export default {
-  components: { Wrap, UserInfo },
+  components: { UserInfo },
   data() {
     return {
       userInfo: {},

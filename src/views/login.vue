@@ -26,15 +26,14 @@
     <router-link class="register" to="register">
       还没账号啊? 赶紧去注册一个吧
     </router-link>
-    <Wrap></Wrap>
+  
   </div>
 </template>
 
 <script>
-import Wrap from "../components/wrap.vue";
 import InputBar from "../components/inputBar.vue";
 export default {
-  components: { Wrap, InputBar },
+  components: { InputBar },
   data() {
     return {
       username: "",

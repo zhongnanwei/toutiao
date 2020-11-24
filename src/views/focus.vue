@@ -1,6 +1,5 @@
 <template>
   <div>
-    <Wrap></Wrap>
     <Title title="我的关注"></Title>
     <ul>
       <li v-for="item in userInfo" :key="item.id">
@@ -24,10 +23,9 @@
 </template>
 
 <script>
-import Wrap from "../components/wrap.vue";
 import Title from "../components/title.vue";
 export default {
-  components: { Wrap, Title },
+  components: {  Title },
   data() {
     return {
       userInfo: [],

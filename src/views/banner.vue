@@ -1,6 +1,5 @@
 <template>
   <div>
-    <Wrap></Wrap>
     <Title title="栏目管理"></Title>
     <div class="line"><span>点击删除以下频道</span></div>
     <div class="channel">
@@ -22,11 +21,9 @@
 </template>
 
 <script>
-import Wrap from "../components/wrap.vue";
 import Title from "../components/title.vue";
 export default {
   components: {
-    Wrap,
     Title,
   },
   data() {

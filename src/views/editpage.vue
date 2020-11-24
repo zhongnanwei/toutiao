@@ -1,6 +1,5 @@
 <template>
   <div>
-    <Wrap></Wrap>
     <Title title="编辑资料"></Title>
     <div class="content">
       <van-uploader :after-read="afterRead" multiple>
@@ -61,11 +60,10 @@
 </template>
 
 <script>
-import Wrap from "../components/wrap.vue";
 import Title from "../components/title.vue";
 import UserInfo from "../components/userInfo.vue";
 export default {
-  components: { Wrap, Title, UserInfo },
+  components: {Title, UserInfo },
   data() {
     return {
       userInfo: {},

@@ -30,15 +30,13 @@
     <div class="btnSubmit">
       <button @click="register">注册</button>
     </div>
-    <Wrap></Wrap>
   </div>
 </template>
 
 <script>
-import Wrap from "../components/wrap.vue";
 import InputBar from "../components/inputBar.vue";
 export default {
-  components: { Wrap, InputBar },
+  components: { InputBar },
   data() {
     return {
       username: "",
