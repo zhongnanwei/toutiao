@@ -11,16 +11,24 @@
         <span class="iconfont iconwode"></span>
       </router-link>
     </header>
-    <van-tabs sticky background="#e4e4e4" line-width="0">
+    <van-tabs
+      sticky
+      background="#e4e4e4"
+      line-width="0"
+      v-model="activeCategoryIndex"
+    >
       <van-tab v-for="post in categoryList" :key="post.id" :title="post.name">
         <PostItem
           :postData="postData"
-          v-for="postData in postList"
+          v-for="postData in categoryList[activeCategoryIndex].postList"
           :key="postData.id"
         />
       </van-tab>
       <div class="banner">
-        <span class="iconfont iconjiantou1" @click="jumpToBanner"></span>
+        <span
+          class="iconfont iconjiantou1"
+          @click="$router.push('/banner')"
+        ></span>
       </div>
     </van-tabs>
   </div>
@@ -32,13 +40,29 @@ export default {
   components: { PostItem },
   data() {
     return {
+      activeCategoryIndex: 0,
       categoryList: [],
-      postList: [],
     };
   },
   methods: {
-    jumpToBanner() {
-      this.$router.push({ path: "banner" });
+    getPost() {
+      const currentCategory = this.categoryList[this.activeCategoryIndex];
+      this.$axios({
+        method: "get",
+        url: "/post",
+        params: {
+          category: currentCategory.id,
+        },
+        // 这里注意,成功回调 不再是 success
+      }).then((res) => {
+        currentCategory.postList = res.data.data;
+      });
+    },
+  },
+  watch: {
+    activeCategoryIndex() {
+      const currentCategory = this.categoryList[this.activeCategoryIndex];
+      if (currentCategory.postList.length == 0) this.getPost();
     },
   },
   created() {
@@ -48,15 +72,13 @@ export default {
       url: "/category",
       // 这里注意,成功回调 不再是 success
     }).then((res) => {
-      this.categoryList = res.data.data;
-    });
-    // axios 使用方式
-    this.$axios({
-      method: "get",
-      url: "/post",
-      // 这里注意,成功回调 不再是 success
-    }).then((res) => {
-      this.postList = res.data.data;
+      this.categoryList = res.data.data.map((item) => {
+        return {
+          ...item,
+          postList: [],
+        };
+      });
+      this.getPost();
     });
   },
 };

@@ -45,7 +45,7 @@ axios.interceptors.request.use(config => {
 });
 
 Vue.filter('imgUrl', (url) => {
-  if (url.indexOf("http") > -1) {
+  if (url.includes("http")) {
     return url;
   } else {
     return axios.defaults.baseURL + url;
