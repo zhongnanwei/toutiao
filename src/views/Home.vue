@@ -1,3 +1,7 @@
+/** 
+   首页
+   Arthas
+*/
 <template>
   <div>
     <header>
@@ -18,11 +22,19 @@
       v-model="activeCategoryIndex"
     >
       <van-tab v-for="post in categoryList" :key="post.id" :title="post.name">
-        <PostItem
-          :postData="postData"
-          v-for="postData in categoryList[activeCategoryIndex].postList"
-          :key="postData.id"
-        />
+        <van-list
+          @load="loadMore"
+          :immediate-check="false"
+          v-model="post.loading"
+          :finished="post.finish"
+          finished-text="别拉啦，到底啦"
+        >
+          <PostItem
+            :postData="postData"
+            v-for="postData in post.postList"
+            :key="postData.id"
+          />
+        </van-list>
       </van-tab>
       <div class="banner">
         <span
@@ -52,11 +64,26 @@ export default {
         url: "/post",
         params: {
           category: currentCategory.id,
+          pageIndex: currentCategory.pageIndex,
+          pageSize: currentCategory.pageSize,
         },
         // 这里注意,成功回调 不再是 success
       }).then((res) => {
-        currentCategory.postList = res.data.data;
+        currentCategory.postList = [
+          ...currentCategory.postList,
+          ...res.data.data,
+        ];
+        //回调后设置禁止往下加载
+        currentCategory.loading = false;
+        //当到底时，设置到底
+        if (res.data.data.length < currentCategory.pageSize)
+          currentCategory.finish = true;
       });
+    },
+    loadMore() {
+      const currentCategory = this.categoryList[this.activeCategoryIndex];
+      currentCategory.pageIndex++;
+      this.getPost();
     },
   },
   watch: {
@@ -76,6 +103,12 @@ export default {
         return {
           ...item,
           postList: [],
+          pageIndex: 1,
+          pageSize: 5,
+          //加载参数
+          loading: false,
+          //首页完成
+          finish: false,
         };
       });
       this.getPost();
@@ -127,11 +160,11 @@ header {
   position: absolute;
   right: 0;
   top: 0;
-  width: 45 /360 * 100vw;
-  height: 44 /360 * 100vw;
+  width: 45px;
+  height: 44px;
   z-index: 1000;
   background-color: #e4e4e4;
-  line-height: 44 /360 * 100vw;
+  line-height: 44px;
   text-align: center;
 }
 </style>
