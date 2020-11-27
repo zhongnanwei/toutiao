@@ -9,6 +9,7 @@ import Personal from '@/views/personal.vue'
 import Banner from '@/views/banner.vue'
 import Focus from '@/views/focus.vue'
 import Search from '@/views/search.vue'
+import Star from '@/views/star.vue'
 
 Vue.use(VueRouter)
 
@@ -53,6 +54,11 @@ const routes = [
     path: '/search',
     name: 'Search',
     component: Search
+  },
+  {
+    path: '/star',
+    name: 'Star',
+    component: Star
   }
 ]
 
@@ -62,7 +68,7 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   //1.对象存储法
   //2.路由meta设置判断方法 if(to.meta.needAuth)
-  const pageAuth = ['/personal', '/editpage', '/focus'];
+  const pageAuth = ['/personal', '/editpage', '/focus', '/star'];
   if (pageAuth.includes(to.path)) {
     if (localStorage.getItem('token')) {
       return next();
