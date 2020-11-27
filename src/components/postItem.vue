@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div @click="$router.push('/post_detail/' + postData.id)">
     <div
       v-if="postData.type == 1 && postData.cover.length < 3"
       class="singlePic"

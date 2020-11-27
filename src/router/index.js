@@ -10,6 +10,7 @@ import Banner from '@/views/banner.vue'
 import Focus from '@/views/focus.vue'
 import Search from '@/views/search.vue'
 import Star from '@/views/star.vue'
+import PostDetail from '@/views/post_detail.vue'
 
 Vue.use(VueRouter)
 
@@ -59,6 +60,11 @@ const routes = [
     path: '/star',
     name: 'Star',
     component: Star
+  },
+  {
+    path: '/post_detail/:id',
+    name: 'PostDetail',
+    component: PostDetail
   }
 ]
 
