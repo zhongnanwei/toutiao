@@ -58,38 +58,43 @@ export default {
   },
   methods: {
     getPost() {
-      const currentCategory = this.categoryList[this.activeCategoryIndex];
+
       this.$axios({
         method: "get",
         url: "/post",
         params: {
-          category: currentCategory.id,
-          pageIndex: currentCategory.pageIndex,
-          pageSize: currentCategory.pageSize,
+          category: this.currentCategory.id,
+          pageIndex: this.currentCategory.pageIndex,
+          pageSize: this.currentCategory.pageSize,
         },
         // 这里注意,成功回调 不再是 success
       }).then((res) => {
-        currentCategory.postList = [
-          ...currentCategory.postList,
+        this.currentCategory.postList = [
+          ...this.currentCategory.postList,
           ...res.data.data,
         ];
         //回调后设置禁止往下加载
-        currentCategory.loading = false;
+        this.currentCategory.loading = false;
         //当到底时，设置到底
-        if (res.data.data.length < currentCategory.pageSize)
-          currentCategory.finish = true;
+        if (res.data.data.length < this.currentCategory.pageSize)
+          this.currentCategory.finish = true;
       });
     },
     loadMore() {
-      const currentCategory = this.categoryList[this.activeCategoryIndex];
-      currentCategory.pageIndex++;
+
+      this.currentCategory.pageIndex++;
       this.getPost();
     },
   },
+  computed:{
+     currentCategory(){
+       return this.categoryList[this.activeCategoryIndex];
+     }
+  },
   watch: {
     activeCategoryIndex() {
-      const currentCategory = this.categoryList[this.activeCategoryIndex];
-      if (currentCategory.postList.length == 0) this.getPost();
+
+      if (this.currentCategory.postList.length == 0) this.getPost();
     },
   },
   created() {
