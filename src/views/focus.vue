@@ -61,7 +61,6 @@ export default {
 
 <style lang="less" scoped>
 ul {
-  margin-top: 10 /360 * 100vw;
   li {
     display: flex;
     padding: 14 /360 * 100vw 20 /360 * 100vw;

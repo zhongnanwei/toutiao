@@ -18,6 +18,7 @@ export default {
   width: 100vw;
   height: 49/360 * 100vw;
   line-height: 49/360 * 100vw;
+  margin-bottom: 5 /360 * 100vw;
   .logo {
     float: left;
     .iconfont {

@@ -55,7 +55,6 @@ export default {
 
 <style lang="less" scoped>
 .line {
-  margin: 5 /360 * 100vw 0;
   height: 20 /360 * 100vw;
   background-color: #e4e4e4;
   line-height: 20 /360 * 100vw;
