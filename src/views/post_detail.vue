@@ -25,8 +25,8 @@
       <video
         controls
         preload="auto"
-        poster="https://timgmb01.bdimg.com/timg?searchbox_feed&quality=100&wh_rate=0&size=b576_324&ref=http%3A%2F%2Fwww.baidu.com&sec=1568739067&di=13e00a6373de7a1a7b0dc83df25a8289&src=http%3A%2F%2Fpic.rmb.bdstatic.com%2Fb856dcd6884d81c688088626a9b8da60.jpeg"
-        src="https://video.pearvideo.com/mp4/adshort/20200421/cont-1670293-15098199_adpkg-ad_hd.mp4"
+        :poster="postData.cover[0].url | imgUrl"
+        src="https://video.pearvideo.com/mp4/adshort/20201113/cont-1706965-15482774_adpkg-ad_hd.mp4"
       ></video>
       <div class="content">
         <div class="info">
@@ -53,6 +53,19 @@
         &nbsp; &nbsp;微信
       </div>
     </div>
+    <div class="line"></div>
+    <div class="comment">
+      <p>精彩跟帖</p>
+      <div class="nocomment" v-if="postData.comment_length == 0">
+        <span>暂无跟帖，抢占沙发</span>
+      </div>
+    </div>
+    <div class="tocomment">
+      <input type="text" placeholder="写帖子" />
+      <span class="iconfont iconpinglun-"></span>
+      <span class="iconfont iconshoucang"></span>
+      <span class="iconfont iconfenxiang"></span>
+    </div>
   </div>
 </template>
 
@@ -76,15 +89,13 @@ export default {
       });
     },
     giveLike() {
-    if(!this.postData.has_like){
-        this.postData.like_length++
-    }else{
-        this.postData.like_length--;
-    }
       this.$axios({
         url: "/post_like/" + this.postData.id,
       }).then((res) => {
-        this.postData.has_like=!this.postData.has_like;
+        this.postData.has_like = !this.postData.has_like;
+        this.postData.has_like
+          ? this.postData.like_length++
+          : this.postData.like_length--;
       });
     },
   },
@@ -94,6 +105,11 @@ export default {
     }).then((res) => {
       this.postData = res.data.data;
       this.postData.create_date = this.postData.create_date.split("T")[0];
+    });
+    this.$axios({
+      url: "/post_comment/" + this.$route.params.id,
+    }).then((res) => {
+      console.log(res);
     });
   },
 };
@@ -188,11 +204,50 @@ export default {
   display: flex;
   justify-content: space-evenly;
   align-items: flex-end;
+  margin-bottom: 20 /360 * 100vw;
   .like {
     color: red;
   }
   .iconweixin {
     color: #00c800;
+  }
+}
+.line {
+  height: 10 /360 * 100vw;
+  background-color: #e4e4e4;
+}
+.comment {
+  padding: 20 /360 * 100vw;
+  border-bottom: 2px solid #d7d7d7;
+  p {
+    font-size: 20 /360 * 100vw;
+    text-align: center;
+  }
+  .nocomment {
+    margin: 20 /360 * 100vw 0;
+    text-align: center;
+    span {
+      font-size: 14 /360 * 100vw;
+      color: #aeaeae;
+    }
+  }
+}
+.tocomment {
+  height: 70 /360 * 100vw;
+  display: flex;
+  align-items: center;
+  padding: 0 20 /360 * 100vw;
+  input {
+    width: 161 /360 * 100vw;
+    height: 32 /360 * 100vw;
+    background-color: #d7d7d7;
+    border-radius: 16 /360 * 100vw;
+    padding-left: 20 /360 * 100vw;
+    border: none;
+  }
+  span {
+    margin-left: 20 /360 * 100vw;
+    font-size: 23 /360 * 100vw;
   }
 }
 </style>

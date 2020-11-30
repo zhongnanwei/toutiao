@@ -11,6 +11,8 @@ import Focus from '@/views/focus.vue'
 import Search from '@/views/search.vue'
 import Star from '@/views/star.vue'
 import PostDetail from '@/views/post_detail.vue'
+import PostComment from '@/views/post_comment.vue'
+import Test from '@/views/Test.vue'
 
 Vue.use(VueRouter)
 
@@ -65,7 +67,18 @@ const routes = [
     path: '/post_detail/:id',
     name: 'PostDetail',
     component: PostDetail
+  },
+  {
+    path: '/post_comment/:id',
+    name: 'PostComment',
+    component: PostComment
+  },
+  {
+    path: '/test',
+    name: 'Test',
+    component: Test
   }
+
 ]
 
 const router = new VueRouter({
