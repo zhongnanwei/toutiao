@@ -1,7 +1,6 @@
 <template>
   <div>
     <Title title="精彩跟帖"></Title>
-
     <CommentMain
       :commentData="parentData"
       v-for="(parentData, index) in commentList"
