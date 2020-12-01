@@ -6,7 +6,7 @@
       <div class="user">
         <p>{{ parentData.user.nickname }}</p>
         <span class="time">{{ parentData.create_date.split("T")[0] }}</span>
-        <span>回复</span>
+        <span @click="sendComment">回复</span>
       </div>
       <div class="content">{{ parentData.content }}</div>
     </div>
@@ -14,9 +14,15 @@
 </template>
 
 <script>
+import eventBus from "../utils/eventBus.js"
 export default {
   name: "Parent",
   props: ["parentData"],
+    methods: {
+    sendComment() {
+      eventBus.$emit("sendMsg", this.parentData.id);
+    },
+  },
 };
 </script>
 

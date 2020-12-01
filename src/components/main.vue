@@ -4,7 +4,7 @@
     <div class="box">
       <img
         v-if="commentData.user.head_img"
-        :src="commentData.user.head_img"
+        :src="commentData.user.head_img | imgUrl"
         alt=""
       />
       <img v-else src="../assets/zhuzui.jpeg" alt="" />
@@ -12,7 +12,7 @@
         <p>{{ commentData.user.nickname }}</p>
         <span>{{ commentData.create_date.split("T")[0] }}</span>
       </div>
-      <span>回复</span>
+      <span @click="sendComment">回复</span>
     </div>
     <Parent :parentData="commentData.parent" v-if="commentData.parent"></Parent>
     <p>{{ commentData.content }}</p>
@@ -21,9 +21,15 @@
 
 <script>
 import Parent from "./parent.vue";
+import eventBus from "../utils/eventBus.js";
 export default {
   props: ["commentData"],
   components: { Parent },
+  methods: {
+    sendComment() {
+      eventBus.$emit("sendMsg", this.commentData.id);
+    },
+  },
 };
 </script>
 

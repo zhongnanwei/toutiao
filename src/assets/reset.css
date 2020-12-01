@@ -162,3 +162,7 @@ html {
 body {
   background-color: #f2f2f2;
 }
+
+textarea {
+  resize: none;
+}

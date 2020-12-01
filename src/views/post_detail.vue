@@ -56,10 +56,10 @@
     <div class="line"></div>
     <div class="comment">
       <p>精彩跟帖</p>
-      <div class="nocomment" v-if="postData.comment_length == 0">
+      <div class="nocomment" v-if="commentList.length == 0">
         <span>暂无跟帖，抢占沙发</span>
       </div>
-      <div class="havecomment" v-if="postData.comment_length > 0">
+      <div class="havecomment" v-if="commentList.length > 0">
         <CommentMain
           :commentData="parentData"
           v-for="(parentData, index) in commentList"
@@ -74,12 +74,7 @@
       </div>
     </div>
     <div class="deactive" v-if="deactive">
-      <input
-        type="text"
-        placeholder="写跟帖"
-        @click="deactive = false"
-        @blur="deactive = true"
-      />
+      <input type="text" placeholder="写跟帖" @click="changeActive" />
       <div class="message">
         <span class="iconfont iconpinglun-"></span>
         <div v-if="postData.comment_length" class="num">
@@ -90,14 +85,19 @@
       <span class="iconfont iconfenxiang"></span>
     </div>
     <div class="active" v-else>
-      <textarea rows="3" autofocus></textarea>
-      <div class="btn">发送</div>
+      <textarea
+        v-model="content"
+        ref="textDom"
+        @blur="changeDeactive"
+      ></textarea>
+      <div class="btn" @click="sendComment">发送</div>
     </div>
   </div>
 </template>
 
 <script>
 import CommentMain from "../components/main.vue";
+import eventBus from "../utils/eventBus.js";
 export default {
   components: { CommentMain },
   data() {
@@ -105,6 +105,7 @@ export default {
       postData: [],
       commentList: [],
       deactive: true,
+      content: "",
     };
   },
   methods: {
@@ -129,6 +130,38 @@ export default {
           : this.postData.like_length--;
       });
     },
+    changeActive() {
+      this.deactive = false;
+      // 我们需要等到 vue 渲染出 textarea 之后再聚焦
+      // vue 带有一个方法 $nextTick
+      this.$nextTick(() => {
+        // 这里的回调会在下次渲染完毕时再执行
+        this.$refs.textDom.focus();
+      });
+    },
+    changeDeactive() {
+      setTimeout(() => {
+        this.deactive = true;
+      }, 100);
+    },
+    sendComment() {
+      this.$axios({
+        url: "/post_comment/" + this.$route.params.id,
+        method: "post",
+        data: { content: this.content, parent_id: this.parentId },
+      }).then((res) => {
+        this.content = "";
+        this.initComment();
+      });
+    },
+    initComment() {
+      this.$axios({
+        url: "/post_comment/" + this.$route.params.id,
+      }).then((res) => {
+        this.commentList = res.data.data;
+        if (this.commentList.length > 3) this.commentList.length = 3;
+      });
+    },
   },
   created() {
     this.$axios({
@@ -137,12 +170,18 @@ export default {
       this.postData = res.data.data;
       this.postData.create_date = this.postData.create_date.split("T")[0];
     });
-    this.$axios({
-      url: "/post_comment/" + this.$route.params.id,
-    }).then((res) => {
-      this.commentList = res.data.data;
-      this.commentList.length = 3;
+    this.initComment();
+  },
+  mounted() {
+    eventBus.$on("sendMsg", (parentId) => {
+      this.parentId = parentId;
+      this.changeActive();
     });
+  },
+  // 用了事件总线的监听, 记得做一件事情
+  // 在销毁组件的时候, 清除这个监听
+  destroyed() {
+    eventBus.$off("sendMsg");
   },
 };
 </script>
