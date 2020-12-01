@@ -30,7 +30,11 @@
       text="关注的用户"
       @click.native="$router.push('/focus')"
     ></UserInfo>
-    <UserInfo title="我的跟帖" text="跟帖/回复"></UserInfo>
+    <UserInfo
+      title="我的跟帖"
+      text="跟帖/回复"
+      @click.native="$router.push('/my_comment')"
+    ></UserInfo>
     <UserInfo
       title="我的收藏"
       text="文章/视频"

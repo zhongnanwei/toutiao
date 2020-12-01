@@ -13,6 +13,7 @@ import Star from '@/views/star.vue'
 import PostDetail from '@/views/post_detail.vue'
 import PostComment from '@/views/post_comment.vue'
 import Test from '@/views/Test.vue'
+import MyComment from '@/views/mycomment.vue'
 
 Vue.use(VueRouter)
 
@@ -77,6 +78,11 @@ const routes = [
     path: '/test',
     name: 'Test',
     component: Test
+  },
+  {
+    path: '/my_comment',
+    name: 'MyComment',
+    component: MyComment
   }
 
 ]
@@ -87,7 +93,7 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   //1.对象存储法
   //2.路由meta设置判断方法 if(to.meta.needAuth)
-  const pageAuth = ['/personal', '/editpage', '/focus', '/star'];
+  const pageAuth = ['/personal', '/editpage', '/focus', '/star', '/my_comment'];
   if (pageAuth.includes(to.path)) {
     if (localStorage.getItem('token')) {
       return next();
