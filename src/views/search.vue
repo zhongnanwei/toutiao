@@ -1,7 +1,7 @@
 <template>
   <div class="search">
     <header>
-      <span class="iconfont iconjiantou" @click="$router.back()"></span>
+      <span class="iconfont iconjiantou" @click="goback"></span>
       <van-search
         v-model="value"
         background="#f2f2f2"
@@ -10,7 +10,7 @@
       />
       <span @click="search(value)">搜索</span>
     </header>
-    <div class="history">
+    <div class="history" v-if="showhistory">
       <h3>历史记录</h3>
       <ul>
         <li
@@ -22,50 +22,65 @@
         </li>
       </ul>
     </div>
-    <div class="hot">
-      <h3>热门搜索</h3>
-      <ul>
-        <li>办公室小野否认解散</li>
-        <li>办公室小野否认解散</li>
-        <li>办公室小野否认解散</li>
-        <li>办公室小野否认解散</li>
-        <li>办公室小野否认解散</li>
-        <li>办公室小野否认解散</li>
-      </ul>
-    </div>
+    <PostItem
+      :postData="search"
+      v-for="search in searchData"
+      :key="search.id"
+    />
   </div>
 </template>
 
 <script>
+import PostItem from "../components/postItem.vue";
 export default {
+  components: {
+    PostItem,
+  },
   data() {
     return {
       value: "",
       historyList: [],
+      searchData: [],
+      showhistory: true,
     };
   },
   methods: {
     search(keyword) {
-      if (!this.historyList.includes(this.value))
-        this.historyList.push(this.value);
+      if (!this.historyList.includes(keyword)) this.historyList.push(keyword);
       this.$axios({
         method: "get",
-        url: "/post_search",
-        data: {
+        url: "post_search",
+        params: {
           keyword,
         },
       }).then((res) => {
-        console.log(res);
+        this.searchData = res.data.data;
+        this.showhistory = false;
       });
+    },
+    goback() {
+      if (this.searchData.length > 0) {
+        this.searchData = [];
+        this.showhistory = true;
+      } else {
+        this.$router.back();
+      }
+    },
+  },
+  watch: {
+    value(newVal) {
+      if (!newVal) {
+        this.searchData = [];
+        this.showhistory = true;
+      }
+    },
+    historyList() {
+      localStorage.setItem("history", JSON.stringify(this.historyList));
     },
   },
   created() {
-    this.$axios({
-      method: "get",
-      url: "/post_search_recommend",
-    }).then((res) => {
-      console.log(res);
-    });
+    if (localStorage.getItem("history"))
+      this.historyList = JSON.parse(localStorage.getItem("history"));
   },
 };
 </script>
@@ -88,7 +103,6 @@ export default {
     padding: 20/360 * 100vw 0;
     flex-direction: column;
     justify-content: space-evenly;
-    border-bottom: 1px solid #ccc;
     ul {
       margin-top: 20 /360 * 100vw;
       li {
