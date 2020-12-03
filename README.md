@@ -1,19 +1,4 @@
-# news
+# 项目说明
 
-## Project setup
-```
-npm install
-```
+头条的后台管理页面
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
