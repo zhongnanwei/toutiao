@@ -46,6 +46,8 @@ export default {
   },
   methods: {
     search(keyword) {
+      //点击历史记录时可以将搜索显示在搜索框中
+      this.value = keyword;
       if (!this.historyList.includes(keyword)) this.historyList.push(keyword);
       this.$axios({
         method: "get",
