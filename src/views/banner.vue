@@ -5,7 +5,7 @@
     <div class="channel">
       <ul>
         <li v-for="(item, index) in focused" :key="index">
-          <span>{{ item.name }}</span>
+          <span @click="deactive(index)">{{ item.name }}</span>
         </li>
       </ul>
     </div>
@@ -13,7 +13,7 @@
     <div class="channel">
       <ul>
         <li v-for="(item, index) in unfocused" :key="index">
-          <span>{{ item.name }}</span>
+          <span @click="active(index)">{{ item.name }}</span>
         </li>
       </ul>
     </div>
@@ -33,22 +33,37 @@ export default {
     };
   },
   created() {
-    // axios 使用方式
-    this.$axios({
-      method: "get",
-      url: "/category",
-      // 这里注意,成功回调 不再是 success
-    }).then((res) => {
-      if (res.status === 200) {
-        res.data.data.forEach((item) => {
-          if (item.is_top) {
-            if (item.name != "关注") this.focused.push(item);
-          } else {
-            this.unfocused.push(item);
-          }
-        });
-      }
-    });
+    if (localStorage.getItem("follow")) {
+      this.focused = JSON.parse(localStorage.getItem("follow"));
+      if(localStorage.getItem("unfollow"))
+      this.unfocused =JSON.parse(localStorage.getItem("unfollow"));
+    } else {
+      this.$axios({
+        method: "get",
+        url: "/category",
+        // 这里注意,成功回调 不再是 success
+      }).then((res) => {
+        this.focused = res.data.data;
+      });
+    }
+  },
+  methods: {
+    deactive(index) {
+      this.unfocused.push(this.focused[index]);
+      this.focused.splice(index, 1);
+    },
+    active(index) {
+      this.focused.push(this.unfocused[index]);
+      this.unfocused.splice(index, 1);
+    },
+  },
+  watch: {
+    focused() {
+      localStorage.setItem("follow", JSON.stringify(this.focused));
+    },
+    unfocused() {
+      localStorage.setItem("unfollow", JSON.stringify(this.unfocused));
+    },
   },
 };
 </script>

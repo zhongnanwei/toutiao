@@ -36,12 +36,12 @@
           />
         </van-list>
       </van-tab>
-      <div class="banner">
+      <!-- <div class="banner">
         <span
           class="iconfont iconjiantou1"
           @click="$router.push('/banner')"
         ></span>
-      </div>
+      </div> -->
     </van-tabs>
   </div>
 </template>
@@ -58,7 +58,6 @@ export default {
   },
   methods: {
     getPost() {
-
       this.$axios({
         method: "get",
         url: "/post",
@@ -81,29 +80,32 @@ export default {
       });
     },
     loadMore() {
-
       this.currentCategory.pageIndex++;
       this.getPost();
     },
   },
-  computed:{
-     currentCategory(){
-       return this.categoryList[this.activeCategoryIndex];
-     }
+  computed: {
+    currentCategory() {
+      return this.categoryList[this.activeCategoryIndex];
+    },
   },
   watch: {
-    activeCategoryIndex() {
-
-      if (this.currentCategory.postList.length == 0) this.getPost();
+    activeCategoryIndex(newVal) {
+      //判断点击的是不是>号，点击则跳转而不是获取数据
+      if (newVal == this.categoryList.length - 1) {
+        this.$router.push("/banner");
+      } else {
+        if (this.currentCategory.postList.length == 0) this.getPost();
+      }
     },
   },
   created() {
-    // axios 使用方式
-    this.$axios({
-      method: "get",
-      url: "/category",
-      // 这里注意,成功回调 不再是 success
-    }).then((res) => {
+    if (localStorage.getItem("follow")) {
+      const res = {
+        data: {
+          data: JSON.parse(localStorage.getItem("follow")),
+        },
+      };
       this.categoryList = res.data.data.map((item) => {
         return {
           ...item,
@@ -116,8 +118,31 @@ export default {
           finish: false,
         };
       });
+      this.categoryList.push({ name: "↓" });
       this.getPost();
-    });
+    } else {
+      // axios 使用方式
+      this.$axios({
+        method: "get",
+        url: "/category",
+        // 这里注意,成功回调 不再是 success
+      }).then((res) => {
+        this.categoryList = res.data.data.map((item) => {
+          return {
+            ...item,
+            postList: [],
+            pageIndex: 1,
+            pageSize: 5,
+            //加载参数
+            loading: false,
+            //首页完成
+            finish: false,
+          };
+        });
+        this.categoryList.push({ name: "↓" });
+        this.getPost();
+      });
+    }
   },
 };
 </script>
@@ -161,15 +186,23 @@ header {
     }
   }
 }
-.banner {
-  position: absolute;
-  right: 0;
-  top: 0;
-  width: 45px;
-  height: 44px;
-  z-index: 1000;
+// 对自己新增的>标签添加固定属性
+/deep/ .van-tab:nth-last-child(2) {
   background-color: #e4e4e4;
+  position: sticky;
+  right: -8px;
   line-height: 44px;
-  text-align: center;
+  width: 44px;
 }
+// .banner {
+//   position: absolute;
+//   right: 0;
+//   top: 0;
+//   width: 45px;
+//   height: 44px;
+//   z-index: 1000;
+//   background-color: #e4e4e4;
+//   line-height: 44px;
+//   text-align: center;
+// }
 </style>
