@@ -145,7 +145,8 @@ export default {
       position: absolute;
       font-size: 46 /360 * 100vw;
       color: #fff;
-      background-color: #ccc;
+      background-color: #333;
+      opacity: 0.6;
       border-radius: 50%;
     }
   }
