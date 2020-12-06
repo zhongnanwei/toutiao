@@ -11,8 +11,17 @@ Vue.use(ElementUI);
 // 绑定到原型
 Vue.prototype.$axios = axios;
 //设置默认的 api 域名基准路径
-axios.defaults.baseURL = 'http://127.0.0.1:3000'
+axios.defaults.baseURL = 'http://localhost:3000'
 Vue.config.productionTip = false
+
+Vue.filter('fixImgUrl', (oldUrl) => {
+  if (oldUrl.includes('http')) {
+    return oldUrl
+  } else {
+    return axios.defaults.baseURL + oldUrl
+  }
+})
+
 
 new Vue({
   router,

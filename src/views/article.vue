@@ -22,7 +22,7 @@
           <el-button
             size="mini"
             type="danger"
-            @click="handleEdit(scope.$index, scope.row)"
+            @click="$router.push('/postarticle?id=' + scope.row.id)"
             >编辑</el-button
           >
         </template>
@@ -54,7 +54,7 @@ export default {
   },
   methods: {
     handleEdit(index, row) {
-      console.log(index, row);
+      console.log(row.id);
     },
     currentChange(newPageIndex) {
       this.pageIndex = newPageIndex;
@@ -92,5 +92,6 @@ export default {
 .block {
   margin-top: 30px;
   background-color: #fff;
+  text-align: center;
 }
 </style>

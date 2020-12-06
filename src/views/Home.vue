@@ -11,11 +11,11 @@
       >
         <el-menu-item index="1">
           <i class="el-icon-menu"></i>
-          <span slot="title" @click="$router.push('./article')">文章列表</span>
+          <span slot="title" @click="$router.push('/article')">文章列表</span>
         </el-menu-item>
         <el-menu-item index="2">
           <i class="el-icon-setting"></i>
-          <span slot="title">发布文章</span>
+          <span slot="title" @click="$router.push('/postarticle')">发布文章</span>
         </el-menu-item>
       </el-menu>
     </el-aside>
@@ -55,7 +55,7 @@ export default {};
 .el-main {
   background-color: #f2f2f2;
   color: #333;
-  text-align: center;
+  // text-align: center;
   // line-height: 160px;
 }
 
