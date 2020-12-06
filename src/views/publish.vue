@@ -125,7 +125,6 @@ export default {
   },
   methods: {
     coverSuccess(res, file, fileList) {
-      console.log(res);
       file.id = res.data.id;
       this.form.cover.push(file);
     },

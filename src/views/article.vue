@@ -53,9 +53,6 @@ export default {
     };
   },
   methods: {
-    handleEdit(index, row) {
-      console.log(row.id);
-    },
     currentChange(newPageIndex) {
       this.pageIndex = newPageIndex;
       this.loadPage();

@@ -61,7 +61,7 @@ export default {
         if (res.data.message == "登录成功") {
           this.$message.success("登录成功");
           localStorage.setItem("token", res.data.data.token);
-          this.$router.push("/");
+          this.$router.push("/article");
         }
       });
     },
