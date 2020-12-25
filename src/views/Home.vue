@@ -49,6 +49,7 @@
 <script>
 import PostItem from "../components/postItem.vue";
 export default {
+  name:'home',
   components: { PostItem },
   data() {
     return {
