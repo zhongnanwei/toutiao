@@ -12,7 +12,6 @@ import Search from '@/views/search.vue'
 import Star from '@/views/star.vue'
 import PostDetail from '@/views/post_detail.vue'
 import PostComment from '@/views/post_comment.vue'
-import Test from '@/views/Test.vue'
 import MyComment from '@/views/mycomment.vue'
 
 Vue.use(VueRouter)
@@ -73,11 +72,6 @@ const routes = [
     path: '/post_comment/:id',
     name: 'PostComment',
     component: PostComment
-  },
-  {
-    path: '/test',
-    name: 'Test',
-    component: Test
   },
   {
     path: '/my_comment',
